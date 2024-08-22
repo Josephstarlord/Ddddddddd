@@ -1,21 +1,18 @@
-
-
 const express = require('express');
 const axios = require('axios');
 
 const app = express();
-
 
 const PORT = process.env.PORT || 3000;
 
 // routes
 app.get('/api/gpt4o', async (req, res) => {
   try {
-    const context = req.query.context;
-    const response = await axios.get(`https://api.kenliejugarap.com/freegpt4o8k/?question=${context}`);
-    res.json(response.data);
+    const prompt = req.query.context;
+    const response = await axios.get(`https://c-v1.onrender.com/api/bard?prompt=${prompt}`);
+    res.json({ answer: response.data.answer });
   } catch (error) {
-    res.status(500).json({ error: 'Une erreur est survenue' });
+    res.status(500).json({ error: 'No Response from Aesther 😭' });
   }
 });
 
@@ -23,5 +20,3 @@ app.get('/api/gpt4o', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-
